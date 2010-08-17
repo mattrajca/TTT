@@ -16,6 +16,7 @@
 			
 			if (board.playerAtCoordinate(x, y) != Player.None) {
 				window.alert("Oops! You already went here!");
+				return;
 			}
 			
 			board.setPlayerAtCoordinate(x, y, Player.Human);
