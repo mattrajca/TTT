@@ -34,7 +34,7 @@
 			if (board.hasWin())
 				winner = Player.Computer;
 			
-			if (board.isFull())
+			if (winner == -2 && board.isFull())
 				winner = Player.None;
 				
 			if (winner != -2)
