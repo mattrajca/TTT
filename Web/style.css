@@ -1,0 +1,47 @@
+body {
+	background-color: #252F32;
+	font-family: Helvetica;
+}
+#bounds {
+	width: 344px;
+	height: 344px;
+	margin: 60px auto 0 auto;
+	position: relative;
+	background-color: #EDEDED;
+	-webkit-border-radius: 10px;
+}
+#grid {
+	width: 304px;
+	margin: 20px;
+	position: absolute;
+}
+.box {
+	width: 100px;
+	height: 100px;
+	float: left;
+}
+.box p {
+	margin: 10px 0 0 0;
+	font-size: 70px;
+	text-align: center;
+}
+.top {
+	border-bottom: 2px solid #004134;
+}
+.bot {
+	border-top: 2px solid #004134;
+}
+.left {
+	border-right: 2px solid #004134;
+}
+.right {
+	border-left: 2px solid #004134;
+}
+.separator {
+	clear: both;
+}
+p#status {
+	color: white;
+	font-size: 15px;
+	text-align: center;
+}

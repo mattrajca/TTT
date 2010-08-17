@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tic Tac Toe</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="style.css" />
+	<script src="board.js"></script>
+	
+	<script>
+		
+		var board = new Board();
+		
+		function gridClick() {
+			var x = Math.floor(event.layerX / kBoardWidth);
+			var y = Math.floor(event.layerY / kBoardWidth);
+			
+			if (board.playerAtCoordinate(x, y) != Player.None) {
+				window.alert("Oops! You already went here!");
+			}
+			
+			board.setPlayerAtCoordinate(x, y, Player.Human);
+			setPlayerInGrid(x, y, Player.Human);
+			
+			var winner = -2;
+			
+			if (board.hasWin())
+				winner = Player.Human;
+			
+			var c = board.findBestComputerMove();
+			board.setPlayerAtCoordinate(c.x, c.y, Player.Computer);
+			setPlayerInGrid(c.x, c.y, Player.Computer);
+			
+			if (board.hasWin())
+				winner = Player.Computer;
+			
+			if (board.isFull())
+				winner = Player.None;
+				
+			if (winner != -2)
+				showEndAlert(winner);
+		}
+		
+		function showEndAlert (player) {
+			var message;
+			
+			switch (player) {
+				case Player.None:
+					message = "Looks like it's a draw! Play again?";
+					break;
+				case Player.Computer:
+					message = "You lost! Play again?";
+					break;
+				case Player.Human:
+					message = "You won! How is this possible?";
+					break;
+				default:
+					break;
+			}
+			
+			window.alert(message);
+			
+			delete board;
+			board = new Board();
+			
+			var boxes = document.getElementsByClassName("box");
+			
+			for (var n = 0; n < boxes.length; n++) {
+				boxes.item(n).innerHTML = "";
+			}
+		}
+		
+		function setPlayerInGrid (x, y, player) {
+			var i = document.getElementById(x + "-" + y);
+			
+			if (player == Player.Computer)
+				i.innerHTML = "<p>O</p>";
+			else if (player == Player.Human)
+				i.innerHTML = "<p>X</p>";
+		}
+		
+	</script>
+</head>
+
+<body>
+	<div id="bounds">
+		<div id="grid" onclick="gridClick();">
+			<div class="box top left" id="0-0"></div>
+			<div class="box top" id="1-0"></div>
+			<div class="box top right" id="2-0"></div>
+			
+			<div class="separator"></div>
+			
+			<div class="box left" id="0-1"></div>
+			<div class="box" id="1-1"></div>
+			<div class="box right" id="2-1"></div>
+			
+			<div class="separator"></div>
+			
+			<div class="box bot left" id="0-2"></div>
+			<div class="box bot" id="1-2"></div>
+			<div class="box bot right" id="2-2"></div>
+			
+			<div class="separator"></div>
+		</div>
+	</div>
+	
+	<p id="status">It's your turn!</p>
+</body>
+</html>
