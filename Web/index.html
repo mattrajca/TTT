@@ -26,17 +26,19 @@
 			
 			if (board.hasWin())
 				winner = Player.Human;
-			
-			var c = board.findBestComputerMove();
-			board.setPlayerAtCoordinate(c.x, c.y, Player.Computer);
-			setPlayerInGrid(c.x, c.y, Player.Computer);
-			
-			if (board.hasWin())
-				winner = Player.Computer;
-			
-			if (winner == -2 && board.isFull())
+			else if (board.isFull())
 				winner = Player.None;
+			else {
+				var c = board.findBestComputerMove();
+				board.setPlayerAtCoordinate(c.x, c.y, Player.Computer);
+				setPlayerInGrid(c.x, c.y, Player.Computer);
 				
+				if (board.hasWin())
+					winner = Player.Computer;
+				else if (board.isFull())
+					winner = Player.None;
+			}
+			
 			if (winner != -2)
 				showEndAlert(winner);
 		}

@@ -94,27 +94,24 @@
 	
 	Player winner = -2;
 	
-	if (BoardHasWin(_board)) {
+	if (BoardHasWin(_board))
 		winner = PlayerHuman;
-		goto end;
+	else if (BoardIsFull(_board))
+		winner = PlayerNone;
+	else {
+		Coordinate c = BoardFindBestComputerMove(_board);
+		BoardSetPlayerAtCoordinate(_board, c.x, c.y, PlayerComputer);
+		
+		if (BoardHasWin(_board))
+			winner = PlayerComputer;
+		else if (BoardIsFull(_board))
+			winner = PlayerNone;
 	}
 	
-	Coordinate c = BoardFindBestComputerMove(_board);
-	BoardSetPlayerAtCoordinate(_board, c.x, c.y, PlayerComputer);
-	
-	if (BoardHasWin(_board)) {
-		winner = PlayerComputer;
-	}
-	
-end:
 	[self setNeedsDisplay:YES];
 	
-	if ([_delegate respondsToSelector:@selector(boardView:gameDidEndWithPlayer:)]) {
-		if (BoardIsFull(_board))
-			winner = PlayerNone;
-		
-		if (winner != -2)		
-			[_delegate boardView:self gameDidEndWithPlayer:winner];
+	if (winner != -2 && [_delegate respondsToSelector:@selector(boardView:gameDidEndWithPlayer:)]) {
+		[_delegate boardView:self gameDidEndWithPlayer:winner];
 	}
 }
 
